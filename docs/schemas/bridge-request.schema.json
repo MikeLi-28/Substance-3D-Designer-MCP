@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/substance-designer-mcp/bridge-request.schema.json",
+  "title": "Substance Designer MCP bridge request",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["protocol_version", "request_id", "token", "command", "arguments"],
+  "properties": {
+    "protocol_version": {"const": "1.0"},
+    "request_id": {"type": "string", "format": "uuid"},
+    "token": {"type": "string", "minLength": 1},
+    "command": {"type": "string", "minLength": 1},
+    "arguments": {"type": "object"}
+  }
+}

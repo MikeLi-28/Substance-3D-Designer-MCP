@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/substance-designer-mcp/bridge-response.schema.json",
+  "title": "Substance Designer MCP bridge response",
+  "oneOf": [
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["protocol_version", "request_id", "ok", "data", "warnings"],
+      "properties": {
+        "protocol_version": {"const": "1.0"},
+        "request_id": {"type": "string"},
+        "ok": {"const": true},
+        "data": {"type": "object"},
+        "warnings": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["protocol_version", "request_id", "ok", "error", "warnings"],
+      "properties": {
+        "protocol_version": {"const": "1.0"},
+        "request_id": {"type": "string"},
+        "ok": {"const": false},
+        "error": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["code", "message", "details"],
+          "properties": {
+            "code": {"type": "string", "minLength": 1},
+            "message": {"type": "string", "minLength": 1},
+            "details": {"type": "object"}
+          }
+        },
+        "warnings": {"type": "array", "items": {"type": "string"}}
+      }
+    }
+  ]
+}

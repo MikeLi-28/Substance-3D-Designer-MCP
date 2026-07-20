@@ -1,0 +1,8 @@
+{
+  "metadata_format_version": "1",
+  "name": "substance_designer_mcp_plugin",
+  "version": "1.1.0",
+  "author": "substance-designer-mcp contributors",
+  "min_designer_version": "16.0.0",
+  "platform": "any"
+}

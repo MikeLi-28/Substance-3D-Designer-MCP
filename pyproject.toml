@@ -1,0 +1,108 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "substance-designer-mcp"
+version = "1.1.0"
+description = "A secure MCP server for Adobe Substance 3D Designer with a 16.0.3 real-machine verified baseline."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { file = "LICENSE" }
+authors = [{ name = "substance-designer-mcp contributors" }]
+keywords = ["mcp", "substance-designer", "adobe", "procedural-materials"]
+classifiers = [
+  "Development Status :: 5 - Production/Stable",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+]
+dependencies = [
+  "mcp>=1.9,<2",
+  "pydantic>=2.7,<3",
+]
+
+[project.optional-dependencies]
+dev = [
+  "build>=1.2",
+  "jsonschema>=4.23",
+  "mypy>=1.13",
+  "pytest>=8.3",
+  "pytest-cov>=6",
+  "ruff>=0.9",
+]
+
+[project.scripts]
+substance-designer-mcp = "substance_designer_mcp.__main__:main"
+
+[project.urls]
+Documentation = "https://github.com/MikeLi-28/Substance-3D-Designer-MCP#readme"
+Issues = "https://github.com/MikeLi-28/Substance-3D-Designer-MCP/issues"
+Source = "https://github.com/MikeLi-28/Substance-3D-Designer-MCP"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/substance_designer_mcp"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+  "/src",
+  "/sd_plugin",
+  "/scripts",
+  "/docs",
+  "/examples",
+  "/assets",
+  "/tests",
+  "/CHANGELOG.md",
+  "/CONTRIBUTING.md",
+  "/LICENSE",
+  "/README.md",
+  "/README.zh-CN.md",
+  "/SECURITY.md",
+]
+[tool.pytest.ini_options]
+addopts = "-ra --strict-config --strict-markers"
+testpaths = ["tests"]
+
+[tool.ruff]
+target-version = "py310"
+line-length = 100
+extend-exclude = ["dist", "build"]
+
+[tool.ruff.per-file-target-version]
+"sd_plugin/**/*.py" = "py39"
+"tests/fakes/**/*.py" = "py39"
+"tests/manual/**/*.py" = "py39"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM", "S"]
+ignore = ["S101"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**/*.py" = ["S104", "S105", "S106", "S108"]
+"sd_plugin/**/*.py" = ["UP006", "UP007", "UP035", "UP045"]
+"tests/fakes/**/*.py" = ["UP045"]
+"tests/manual/**/*.py" = ["E402", "UP045"]
+"scripts/verify_release.py" = ["S104"]
+
+[tool.mypy]
+python_version = "3.10"
+strict = true
+packages = ["substance_designer_mcp"]
+mypy_path = "src"
+warn_unused_configs = true
+
+[[tool.mypy.overrides]]
+module = ["mcp.*"]
+follow_untyped_imports = true
+
+[tool.coverage.run]
+branch = true
+source = ["src/substance_designer_mcp", "sd_plugin/substance_designer_mcp_plugin"]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = true

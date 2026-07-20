@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "substance-designer": {
+      "command": "substance-designer-mcp",
+      "args": []
+    }
+  }
+}
